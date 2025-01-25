@@ -1,0 +1,15 @@
+{
+    "watch": [
+      "src", 
+      "public/ts" 
+    ],
+    "ext": "ts,js,json",
+    "exec": "ts-node ./src/index.ts",
+    "ignore": [
+      "public/js", 
+      "node_modules"
+    ],
+    "delay": "500ms",
+    "verbose": true
+}
+  
