@@ -3,6 +3,7 @@ import schedule from 'node-schedule'
 import moment from 'moment'
 import { ApiResponse } from "./types";
 import morgan from "morgan";
+import axios from 'axios'
 
 const port = 5000;
 
@@ -21,6 +22,8 @@ app.use(morgan('dev'))
     
 //     console.log("File executed successfully")
 // });
+
+const apiUrl = "http://localhost:5000/logs"; // Assuming this API is hosted locally on the same port
 
 app.get("/logs", (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -50,6 +53,20 @@ app.get("/logs", (req: Request, res: Response, next: NextFunction) => {
         })
     }
 })
+
+setInterval(() => {
+    console.log('loading....')
+    axios.get(apiUrl)
+        .then(response => {
+            console.log("API response:", response.data);
+            // Handle the response data here (like logging or processing it)
+        })
+        .catch(error => {
+            console.error("Error while calling /logs API:", error.message);
+            // Optionally handle the error or retry the request
+        });
+}, 60000); // Run every 60 seconds (1 minute)
+
 
 app.listen(port, () => {
     console.log(`App running on port ${port}`)

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const moment_1 = __importDefault(require("moment"));
 const morgan_1 = __importDefault(require("morgan"));
+const axios_1 = __importDefault(require("axios"));
 const port = 5000;
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -16,6 +17,7 @@ app.use((0, morgan_1.default)('dev'));
 //     console.log(moment().format('LL'))
 //     console.log("File executed successfully")
 // });
+const apiUrl = "http://localhost:5000/logs"; // Assuming this API is hosted locally on the same port
 app.get("/logs", (req, res, next) => {
     try {
         console.log((0, moment_1.default)().utc().utcOffset('+05:30').format('LL'), (0, moment_1.default)().utc().utcOffset('+05:30').format('hh:mm:ss'));
@@ -41,6 +43,18 @@ app.get("/logs", (req, res, next) => {
         });
     }
 });
+setInterval(() => {
+    console.log('loading....');
+    axios_1.default.get(apiUrl)
+        .then(response => {
+        console.log("API response:", response.data);
+        // Handle the response data here (like logging or processing it)
+    })
+        .catch(error => {
+        console.error("Error while calling /logs API:", error.message);
+        // Optionally handle the error or retry the request
+    });
+}, 60000); // Run every 60 seconds (1 minute)
 app.listen(port, () => {
     console.log(`App running on port ${port}`);
 });
