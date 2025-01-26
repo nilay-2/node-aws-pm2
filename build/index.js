@@ -18,7 +18,7 @@ app.use((0, morgan_1.default)('dev'));
 // });
 app.get("/logs", (req, res, next) => {
     try {
-        console.log((0, moment_1.default)().format('LL'), (0, moment_1.default)().format('hh:mm:ss'));
+        console.log((0, moment_1.default)().utc().utcOffset('+05:30').format('LL'), (0, moment_1.default)().utc().utcOffset('+05:30').format('hh:mm:ss'));
         console.log(":::::::::::ENTER IN LOGS SERVICE::::::::::::");
         const { body } = req;
         const data = {
