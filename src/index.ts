@@ -24,7 +24,7 @@ app.use(morgan('dev'))
 
 app.get("/logs", (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log(moment().format('LL'), moment().format('hh:mm:ss'))
+        console.log(moment().utc().utcOffset('+05:30').format('LL'), moment().utc().utcOffset('+05:30').format('hh:mm:ss'))
         console.log(":::::::::::ENTER IN LOGS SERVICE::::::::::::")
         const {body} = req
 
